@@ -105,7 +105,8 @@ $rowCount = mysqli_num_rows($result);
         </div>
 
         <div class="container">
-            <?php $wordCount = 50; $post_content_trimmed; ?>
+            <?php $wordCount = 50;
+            $post_content_1; ?>
             <?php while ($row = mysqli_fetch_array($result)) : ?>
                 <div class="card">
                     <div class="card-header">
@@ -113,8 +114,15 @@ $rowCount = mysqli_num_rows($result);
                     </div>
                     <h3 class="card-header"> <b><?php echo $row['post_title']; ?></b> </h3>
                     <div class="card-body">
-                        <p class="card-text"> <?php echo $row['post_content']; ?> </p>
+                        <?php $post_content_1 = $row['post_content']; ?>
+                        <?php if (str_word_count($post_content_1) >= $wordCount) {
+                            $post_content_2 = substr($post_content_1, 0, 250) . '...';
+                        } else {
+                            $post_content_2 = $row['post_content'];
+                        } ?>
+                        <p class="card-text"> <?php echo $post_content_2; ?> </p>
                         <?php echo "<a href='post_details.php?ID={$row['post_id']}' class='btn btn-outline-primary'>Read more</a>"; ?>
+
                     </div>
                 </div>
                 <br>
